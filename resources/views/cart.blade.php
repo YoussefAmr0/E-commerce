@@ -27,26 +27,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($cartItems as $item)
+                                @foreach ($cart as $carts)
                                     <tr>
                                         <td class="hidden pb-4 md:table-cell">
                                             <a href="#">
-                                                <img src="{{ $item->attributes->image }}" class="w-20 rounded"
-                                                    alt="Thumbnail">
+                                                <img src="{{ asset('uploads/students/' . $carts->image) }}"
+                                                    class="w-20 rounded" alt="Thumbnail">
                                             </a>
                                         </td>
                                         <td>
-                                            <p class="mb-2 md:ml-4">{{ $item->name }}</p>
+                                            <p class="mb-2 md:ml-4">{{ $carts->name }}</p>
 
                                         </td>
                                         <td class="justify-center mt-6 md:justify-end md:flex">
                                             <div class="h-10 w-28">
                                                 <div class="relative flex flex-row w-full h-8">
 
-                                                    <form action="{{ route('cart.update') }}" method="POST">
+                                                    <form action="{{ route('cart.update', $carts->id) }}" method="POST">
                                                         @csrf
-                                                        <input type="hidden" name="id" value="{{ $item->id }}">
-                                                        <input type="number" name="quantity" value="{{ $item->quantity }}"
+                                                        @method('put')
+                                                        <input type="hidden" name="id" value="{{ $carts->id }}">
+                                                        <input type="number" name="quantity"
+                                                            value="{{ $carts->quantity }}"
                                                             class="w-6 text-center bg-gray-300" />
                                                         <button type="submit"
                                                             class="px-2 pb-2 ml-2 text-white bg-blue-500">update</button>
@@ -56,30 +58,25 @@
                                         </td>
                                         <td class="hidden text-right md:table-cell">
                                             <span class="text-sm font-medium lg:text-base">
-                                                ${{ $item->price }}
+                                                ${{ $carts->price }}
                                             </span>
                                         </td>
                                         <td class="hidden text-right md:table-cell">
-                                            <form action="{{ route('cart.remove') }}" method="POST">
+                                            <form action="{{ route('cart.destroy', $carts->id) }}" method="POST">
                                                 @csrf
-                                                <input type="hidden" value="{{ $item->id }}" name="id">
+                                                @method('delete')
+                                                <input type="hidden" value="{{ $carts->id }}" name="id">
                                                 <button class="px-4 py-2 text-white bg-red-600">x</button>
                                             </form>
 
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                         <div>
-                            Total: ${{ Cart::getTotal() }}
                         </div>
                         <div>
-                            <form action="{{ route('cart.clear') }}" method="POST">
-                                @csrf
-                                <button class="px-6 py-2 text-red-800 bg-red-300">Remove All Cart</button>
-                            </form>
                         </div>
 
 

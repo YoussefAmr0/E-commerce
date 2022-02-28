@@ -21,10 +21,10 @@
                         <span class="mt-2 text-gray-500">${{ $sales->new_price }}</span>
                         <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" value="{{ $sales->id }}" name="id">
+                            <input type="hidden" value="{{ Auth::id() }}" name="id">
                             <input type="hidden" value="{{ $sales->name }}" name="name">
                             <input type="hidden" value="{{ $sales->new_price }}" name="price">
-                            <input type="hidden" value="{{ asset('uploads/students/' . $sales->image) }}"
+                            <input type="hidden" value="{{ $sales->image }}"
                                 name="image">
                             <input type="hidden" value="1" name="quantity">
                             <button class="px-4 py-2 text-white bg-blue-800 rounded">Add To Cart</button>

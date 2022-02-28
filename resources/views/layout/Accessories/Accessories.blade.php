@@ -13,13 +13,12 @@
                         <h3 class="text-gray-700 uppercase">{{ $accessoriess->name }}</h3>
                         <p class="">{{ $accessoriess->description }}</p>
                         <span class="mt-2 text-gray-500">${{ $accessoriess->price }}</span>
-                        <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('cart.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" value="{{ $accessoriess->id }}" name="id">
+                            <input type="hidden" value="{{ Auth::id() }}" name="id">
                             <input type="hidden" value="{{ $accessoriess->name }}" name="name">
                             <input type="hidden" value="{{ $accessoriess->price }}" name="price">
-                            <input type="hidden" value="{{ asset('uploads/students/' . $accessoriess->image) }}"
-                                name="image">
+                            <input type="hidden" value="{{ $accessoriess->image }}"name="image">
                             <input type="hidden" value="1" name="quantity">
                             <button class="px-4 py-2 text-white bg-blue-800 rounded">Add To Cart</button>
                         </form>
